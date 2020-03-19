@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Record Shack</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" />
@@ -12,10 +12,6 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
         <div class="container">
-            <a href="#" class="navbar-brand text-larger">
-                LOGO
-            </a>
-
             <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="#navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -25,6 +21,9 @@
                 <ul class="navbar-nav">
                     <li class="nav-item mx-2 ">
                         @Html.ActionLink("Home", "Index", "Home", "", new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item mx-2">
+                        @Html.ActionLink("About", "About", "Home", "", new { @class = "nav-link"})
                     </li>
                     <li class="navbar-nav mx-2">
                         @Html.ActionLink("Records", "List", new { controller = "Record", id = (int?)null }, new { @class = "nav-link" })

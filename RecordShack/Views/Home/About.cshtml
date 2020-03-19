@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "About";
+}
+
+
+<h1 class="display-4 my-3">About Record Shack</h1>
+
+<div class="col-md-10">
+    <section class="my-4">
+        <h2 class="text-primary">Record Shack</h2>
+        <p class="">
+            Record shack is a basic content management system that allows users to view and interact with content. The application makes use of Forms Authentication to sign users in and out and Role Based Authorization to allow for administrator and moderator privileges. Users can view records, artists and genres as well as details about them and interact with the content by posting comments and providing ratings for records.
+        </p>
+
+        <h3 class="text-primary">Features</h3>
+        <ul class="ml-3 col-md-8">
+            <li>
+                Users can search and view records, artists and genres as well as their details
+            </li>
+
+            <li>
+                Users can register and sign in to post comments and ratings on their favourite records.
+            </li>
+
+            <li>
+                Administrator users can perform CRUD (Create, Read, Update and Delete) operations on all records, artists and genres.
+            </li>
+
+            <li>
+                Moderator users can view and remove all ratings that don’t adhere to the community guidelines. 
+            </li>
+
+            <li>
+                Content is loaded in dynamically making it perfect for scalable solutions.
+            </li>
+        </ul>
+
+        
+    </section>
+
+    <section class="my-4">
+        <h3 class="text-primary">Challenges</h3>
+        <p>
+            The following challenges were encountered during the development of this application and how they were solved.
+        </p>
+
+        <ul>
+            <li>
+                Making use of dynamic content (e.g. Displaying records and their ratings & dynamically populating dropdown lists) – Made use of Model View View Model (MVVM) structural design pattern, to manage dynamic content.
+            </li>
+            <li>
+                Dynamically loading in images – Created a custom HTML Helper to load in images with the source, and alt, dimensions and CSS classes.
+            </li>
+            <li>
+                Easier navigation to details – Streamlined by using images as hyperlinks and creating overlay text that appear on hover.
+            </li>
+            <li>
+                Admin and Mod logins – Used Role Provider to implement role based authorization to restrict access to specific areas and control of the application.
+            </li>
+        </ul>
+
+        <h3 class="text-primary">Technologies and Frameworks Used</h3>
+        <ul>
+            <li>
+                .NET (C#, Razor, LINQ, Role Provider, Forms Authentication, Entity Framework)
+            </li>
+            <li>
+                SQL
+            </li>
+            <li>
+                Model View View Model (MVVM)
+            </li>
+            <li>
+                HTML, CSS & JavaScript
+            </li>
+            <li>
+                jQuery
+            </li>
+            <li>
+                Bootstrap 4
+            </li>
+        </ul>
+    </section>
+</div>
+
+
+
