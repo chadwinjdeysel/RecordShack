@@ -1,0 +1,45 @@
+﻿@model RecordShack.View_Models.Genre.DetailsViewModel
+
+    <div class="image-container">
+        @Html.Image(Model.Genre.ImageSrc, Model.Genre.ImageAlt, "100%", "350", "genre-image ")
+        <div class="image-overlay-text">
+            <h1 class="display-3">@Model.Genre.GenreName</h1>
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h2 class="card-title">Genre Bio</h2>
+                    <p class="card-text text-larger">
+                        @Model.Genre.GenreBio
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card my-3">
+                <div class="card-body">
+                    <h2 class="card-title">Notable Albums</h2>
+
+                    <div class="row">
+                        @foreach (var record in Model.RecordsList)
+                        {
+                            <div class="col-sm-3 my-1">
+                                @Html.Image(record.ImageSrc, record.ImageAlt, "100%", "", "")
+                            </div>
+                            <div class="col-sm-9 my-1" style="display: flex; align-items: center;">
+                                @Html.ActionLink(record.RecordName, "Details", new { controller = "Record", id = record.RecordID}, new { @class = ""})
+                            </div>
+                            
+                        }
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    

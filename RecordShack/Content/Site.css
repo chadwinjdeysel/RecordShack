@@ -1,0 +1,108 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.text-larger {
+    font-size: 125%;
+}
+
+.card {
+    height: 100%;
+    border-radius: 0;
+    border-radius: 0px;
+    transition-duration: 0.3s;
+}
+
+.card-img-top {
+    border-radius:0;
+}
+
+.btn {
+    border-radius: 0 !important;
+}
+
+
+.record-cover-container {
+    position: relative;
+}
+
+.record-cover {
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.record-cover:hover .overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.quote {
+    padding: .5rem 1rem;
+    border-left: .25rem solid var(--indigo);
+}
+
+.genre-image {
+    object-fit: cover;
+    filter: brightness(50%);
+}
+
+.image-container {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.image-overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.global-search{
+    width: 80px !important;
+}
+
+.global-search:focus {
+    width: 200px !important;
+}
+
+

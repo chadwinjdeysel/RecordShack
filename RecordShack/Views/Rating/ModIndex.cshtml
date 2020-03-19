@@ -1,0 +1,30 @@
+﻿@model RecordShack.View_Models.Rating.ModIndexViewModel
+
+@{  
+    ViewBag.Title = "ModIndex";
+}
+
+<h1 class="display-4 my-4">Moderator Index</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        @foreach (var rating in Model.RatingsList)
+        {
+            <a class="float-right text-danger" href="@Url.Action("Delete", "Rating", new { id = rating.RatingID})">
+                <i class="fas fa-trash-alt "></i>
+            </a>
+
+            <div class="quote">
+                <p class="text-larger mb-0 ">
+                    @Html.ActionLink(rating.tblRecord.RecordName, "Details", new { controller = "Record", id = rating.tblRecord.RecordID }, new { @class = "text-muted" }) •
+                    @Html.ActionLink(rating.tblUser.UserName, "Details", new { controller = "Account", id = rating.tblUser.UserID }, new { @class = "text-muted" })
+                </p>
+                <p class="ml-2 mb-1">@rating.Comment</p>
+                <p class="ml-2 mb-0">Rating: @rating.Rating / 5</p>
+            </div>
+            <hr />
+
+
+        }
+    </div>
+</div>

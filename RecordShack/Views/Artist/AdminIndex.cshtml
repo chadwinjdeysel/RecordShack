@@ -1,0 +1,50 @@
+﻿@model RecordShack.View_Models.Artist.AdminIndexViewModel
+
+@{
+    ViewBag.Title = "Admin Index";
+}
+
+<h2 class="my-3 display-4">Admin Index - Artists</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary"})
+</p>
+
+<table class="table" id="dataTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageSrc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArtistBio)
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model.ArtistList)
+        {
+            <tr>
+                <td>
+                    @Html.Image(item.ImageSrc, item.ImageAlt, "100%", "", "")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtistName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArtistBio)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ArtistID }, new { @class = "btn btn-success my-1 btn-block" })
+                    @Html.ActionLink("Details", "Details", new { id = item.ArtistID }, new { @class = "btn btn-info my-1 btn-block" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ArtistID }, new { @class = "btn btn-danger my-1 btn-block" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,52 @@
+﻿@model RecordShack.View_Models.Genre.AdminIndexViewModel
+
+
+@{
+    ViewBag.Title = "AdminIndex";
+}
+
+    <h2 class="my-3 display-4">Admin Index - Genre</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<table class="table" >
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageSrc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GenreName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GenreBio)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.GenresList)
+        {
+            <tr>
+                <td>
+                    @Html.Image(item.ImageSrc, item.ImageAlt, "100%", "", "")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenreName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenreBio)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GenreID }, new { @class = "btn btn-success my-1 btn-block" })
+                    @Html.ActionLink("Details", "Details", new { id = item.GenreID }, new { @class = "btn btn-info my-1 btn-block" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GenreID }, new { @class = "btn btn-danger my-1 btn-block" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+

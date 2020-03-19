@@ -1,0 +1,79 @@
+﻿@model RecordShack.View_Models.Artist.DetailsViewModel 
+
+@{ 
+    var artist = Model.Artist;
+    var recordslist = Model.RecordsList;
+}
+    <h1 class="display-3 text-center my-3">Artist Details</h1>
+
+    <div class="row my-3">
+
+        <div class="col-md-4">
+            <a href="@Url.Action("List", "Record")" class="position-sticky">
+                @Html.Image(artist.ImageSrc, artist.ImageAlt, "100%", "", "")
+            </a>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">@artist.ArtistName</h2>
+                    <p class="card-text">
+                        @artist.ArtistBio
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row my-3">
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center card-title">Albums</h2>
+                    <div class="row">
+
+                        @if (recordslist.Count() >= 1)
+                        {
+                            foreach (var record in recordslist)
+                            {
+                                <div class="col-sm-4">
+                                    <div class="card">
+                                        <a href="@Url.Action("Details", "Record", new { id = record.RecordID})" class="record-cover">
+                                            <div class="record-cover-container">
+                                                @Html.Image(record.ImageSrc, record.ImageAlt, "100%", "", "card-img-top record-cover")
+                                                <div class="overlay">
+                                                    <div class="overlay-text">View Details</div>
+                                                </div>
+                                            </div>
+
+                                        </a>
+
+
+                                        <div class="card-body">
+                                            <p class="text-larger p-0">@Html.DisplayFor(m => record.RecordName)</p>
+                                            <p class="py-0">@Html.DisplayFor(m => record.tblArtist.ArtistName)</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-center text-muted text-larger">There are no albums available</p>
+                        }
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>

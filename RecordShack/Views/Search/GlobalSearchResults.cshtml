@@ -1,0 +1,122 @@
+﻿@model RecordShack.View_Models.Search.GlobalSearchViewModel
+
+@{
+    ViewBag.Title = "Search Results";
+}
+<h1 class="text-center display-4 my-3">Results for "@Model.SearchTerm"</h1>
+
+
+@if (Model.RecordList.Count() != 0)
+{
+    <div class="my-3">
+        <p class="text-larger my-0">@Html.LabelFor(m => m.RecordList)</p>
+
+        <div class="row">
+            @foreach (var record in Model.RecordList.Take(4))
+            {
+                <div class="col-md-3 my-3">
+                    <div class="card">
+                        <a href="@Url.Action("Details", "Record", new { id = record.RecordID})" class="record-cover">
+                            <div class="record-cover-container">
+                                @Html.Image(record.ImageSrc, record.ImageAlt, "100%", "", "card-img-top record-cover")
+                                <div class="overlay">
+                                    <div class="overlay-text">View Details</div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="card-body">
+                            <p class="text-larger p-0">@Html.DisplayFor(m => record.RecordName)</p>
+                            <p class="py-0">
+                                @Html.ActionLink(record.tblArtist.ArtistName, "Details", new { controller = "Artist", id = record.tblArtist.ArtistID }, new { @class = "text-muted" })
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.RecordList.Count() >= 4)
+        {
+        <a href="#" class="text-muted">View more results</a>
+        }
+    </div>
+
+    <hr />
+}
+
+@if (Model.ArtistList.Count() != 0)
+{
+    <div class="my-3">
+        <p class="text-larger my-0">@Html.LabelFor(m => m.ArtistList)</p>
+
+        <div class="row">
+            @foreach (var artist in Model.ArtistList.Take(4))
+            {
+                <div class="col-md-3 my-3">
+                    <div class="card">
+                        <a href="@Url.Action("Details", "Artist", new { id = artist.ArtistID})" class="record-cover">
+                            <div class="record-cover-container">
+                                @Html.Image(artist.ImageSrc, artist.ImageAlt, "100%", "", "card-img-top record-cover")
+                                <div class="overlay">
+                                    <div class="overlay-text">View Details</div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="card-body">
+                            <p class="text-larger p-0">@Html.DisplayFor(m => artist.ArtistName)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.ArtistList.Count() >= 4)
+        {
+        <a href="#" class="text-muted">View more results</a>
+        }
+    </div>
+    <hr />
+}
+
+@if (Model.GenreList.Count() != 0)
+{
+    <div class="my-3">
+        <p class="text-larger my-0">@Html.LabelFor(m => m.GenreList)</p>
+
+    <div class="row">
+        @foreach (var genre in Model.GenreList.Take(4))
+        {
+            <div class="col-md-3 my-3">
+                <div class="card">
+                    <a href="@Url.Action("Details", "Genre", new { id = genre.GenreID})" class="record-cover">
+                        <div class="record-cover-container">
+                            @Html.Image(genre.ImageSrc, genre.ImageAlt, "100%", "", "card-img-top record-cover")
+                            <div class="overlay">
+                                <div class="overlay-text">View Details</div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="card-body">
+                        <p class="text-larger p-0">@Html.DisplayFor(m => genre.GenreName)</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (Model.ArtistList.Count() >= 4)
+    {
+    <a href="#" class="text-muted">View more results</a>
+    }
+</div>
+
+}
+
+@if(Model.RecordList.Count() == 0 && Model.GenreList.Count() == 0 && Model.ArtistList.Count() == 0)
+{
+    <p class="text-larger">No results were found.</p>
+}
+

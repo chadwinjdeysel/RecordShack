@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RecordShackCMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblArtist">
+    <Key>
+      <PropertyRef Name="ArtistID" />
+    </Key>
+    <Property Name="ArtistID" Type="Int32" Nullable="false" />
+    <Property Name="ArtistName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ArtistBio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImageSrc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImageAlt" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tblRecords" Relationship="Self.FK_tblRecord_tblArtist" FromRole="tblArtist" ToRole="tblRecord" />
+  </EntityType>
+  <EntityType Name="tblGenre">
+    <Key>
+      <PropertyRef Name="GenreID" />
+    </Key>
+    <Property Name="GenreID" Type="Int32" Nullable="false" />
+    <Property Name="GenreName" Type="String" MaxLength="55" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GenreBio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImageSrc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImageAlt" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tblRecords" Relationship="Self.FK_tblRecord_tblGenre" FromRole="tblGenre" ToRole="tblRecord" />
+  </EntityType>
+  <EntityType Name="tblRating">
+    <Key>
+      <PropertyRef Name="RatingID" />
+    </Key>
+    <Property Name="RatingID" Type="Int32" Nullable="false" />
+    <Property Name="RecordID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Rating" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tblRecord" Relationship="Self.FK_tblRatings_tblRecord" FromRole="tblRatings" ToRole="tblRecord" />
+    <NavigationProperty Name="tblUser" Relationship="Self.FK_tblRatings_tblUser" FromRole="tblRatings" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblRecord">
+    <Key>
+      <PropertyRef Name="RecordID" />
+    </Key>
+    <Property Name="RecordID" Type="Int32" Nullable="false" />
+    <Property Name="ArtistID" Type="Int32" />
+    <Property Name="GenreID" Type="Int32" />
+    <Property Name="RecordName" Type="String" MaxLength="55" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RecordBio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ReleaseDate" Type="DateTime" Precision="0" />
+    <Property Name="ImageSrc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImageAlt" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tblArtist" Relationship="Self.FK_tblRecord_tblArtist" FromRole="tblRecord" ToRole="tblArtist" />
+    <NavigationProperty Name="tblGenre" Relationship="Self.FK_tblRecord_tblGenre" FromRole="tblRecord" ToRole="tblGenre" />
+    <NavigationProperty Name="tblRatings" Relationship="Self.FK_tblRatings_tblRecord" FromRole="tblRecord" ToRole="tblRatings" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="55" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="55" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="55" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tblRatings" Relationship="Self.FK_tblRatings_tblUser" FromRole="tblUser" ToRole="tblRatings" />
+    <NavigationProperty Name="tblUserRoles" Relationship="RecordShackCMSModel.FK_tblUserRoles_tblUser" FromRole="tblUser" ToRole="tblUserRole" />
+  </EntityType>
+  <Association Name="FK_tblRecord_tblArtist">
+    <End Role="tblArtist" Type="Self.tblArtist" Multiplicity="0..1" />
+    <End Role="tblRecord" Type="Self.tblRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblArtist">
+        <PropertyRef Name="ArtistID" />
+      </Principal>
+      <Dependent Role="tblRecord">
+        <PropertyRef Name="ArtistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRecord_tblGenre">
+    <End Role="tblGenre" Type="Self.tblGenre" Multiplicity="0..1" />
+    <End Role="tblRecord" Type="Self.tblRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblGenre">
+        <PropertyRef Name="GenreID" />
+      </Principal>
+      <Dependent Role="tblRecord">
+        <PropertyRef Name="GenreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRatings_tblRecord">
+    <End Role="tblRecord" Type="Self.tblRecord" Multiplicity="1" />
+    <End Role="tblRatings" Type="Self.tblRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRecord">
+        <PropertyRef Name="RecordID" />
+      </Principal>
+      <Dependent Role="tblRatings">
+        <PropertyRef Name="RecordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRatings_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+    <End Role="tblRatings" Type="Self.tblRating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tblRatings">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RecordShackCMSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblArtists" EntityType="Self.tblArtist" />
+    <EntitySet Name="tblGenres" EntityType="Self.tblGenre" />
+    <EntitySet Name="tblRatings" EntityType="Self.tblRating" />
+    <EntitySet Name="tblRecords" EntityType="Self.tblRecord" />
+    <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+    <AssociationSet Name="FK_tblRecord_tblArtist" Association="Self.FK_tblRecord_tblArtist">
+      <End Role="tblArtist" EntitySet="tblArtists" />
+      <End Role="tblRecord" EntitySet="tblRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRecord_tblGenre" Association="Self.FK_tblRecord_tblGenre">
+      <End Role="tblGenre" EntitySet="tblGenres" />
+      <End Role="tblRecord" EntitySet="tblRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRatings_tblRecord" Association="Self.FK_tblRatings_tblRecord">
+      <End Role="tblRecord" EntitySet="tblRecords" />
+      <End Role="tblRatings" EntitySet="tblRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRatings_tblUser" Association="Self.FK_tblRatings_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblRatings" EntitySet="tblRatings" />
+    </AssociationSet>
+    <EntitySet Name="tblRoles" EntityType="RecordShackCMSModel.tblRole" />
+    <EntitySet Name="tblUserRoles" EntityType="RecordShackCMSModel.tblUserRole" />
+    <AssociationSet Name="FK_tblUserRoles_tblRoles" Association="RecordShackCMSModel.FK_tblUserRoles_tblRoles">
+      <End Role="tblRole" EntitySet="tblRoles" />
+      <End Role="tblUserRole" EntitySet="tblUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblUserRoles_tblUser" Association="RecordShackCMSModel.FK_tblUserRoles_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblUserRole" EntitySet="tblUserRoles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="tblRole">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoleDescription" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tblUserRoles" Relationship="RecordShackCMSModel.FK_tblUserRoles_tblRoles" FromRole="tblRole" ToRole="tblUserRole" />
+  </EntityType>
+  <EntityType Name="tblUserRole">
+    <Key>
+      <PropertyRef Name="UserRoleID" />
+    </Key>
+    <Property Name="UserRoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tblRole" Relationship="RecordShackCMSModel.FK_tblUserRoles_tblRoles" FromRole="tblUserRole" ToRole="tblRole" />
+    <NavigationProperty Name="tblUser" Relationship="RecordShackCMSModel.FK_tblUserRoles_tblUser" FromRole="tblUserRole" ToRole="tblUser" />
+  </EntityType>
+  <Association Name="FK_tblUserRoles_tblRoles">
+    <End Type="RecordShackCMSModel.tblRole" Role="tblRole" Multiplicity="1" />
+    <End Type="RecordShackCMSModel.tblUserRole" Role="tblUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRole">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="tblUserRole">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblUserRoles_tblUser">
+    <End Type="RecordShackCMSModel.tblUser" Role="tblUser" Multiplicity="1" />
+    <End Type="RecordShackCMSModel.tblUserRole" Role="tblUserRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tblUserRole">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

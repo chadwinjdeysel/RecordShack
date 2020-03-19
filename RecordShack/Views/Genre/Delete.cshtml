@@ -1,0 +1,94 @@
+﻿@model RecordShack.View_Models.Genre.DeleteViewModel
+
+@{
+    ViewBag.Title = "Delete";
+
+    var genre = Model.Genre;
+    var recordslist = Model.RecordsList;
+}
+
+<h2 class="text-center my-4 display-4">Delete - Artist</h2>
+
+<div class="row my-3">
+
+    <div class="col-md-4">
+        <a href="@Url.Action("AdminIndex")">
+            @Html.Image(genre.ImageSrc, genre.ImageAlt, "100%", "", "")
+        </a>
+
+
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">@genre.GenreName</h2>
+
+                <p class="card-text">@genre.GenreBio</p>
+                <hr />
+
+                <p class="text-larger">Albums for this genre</p>
+
+
+                @if (recordslist.Count != 0)
+                {
+                    <div class="row">
+                        @foreach (var record in recordslist)
+                        {
+                            <div class="col-md-4 record-cover">
+                                <div class="record-cover-container">
+                                    @Html.Image(record.ImageSrc, record.ImageAlt, "100%", "", "")
+
+                                    <div class="overlay">
+                                        <div class="overlay-text">@record.RecordName</div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <p class="text-center text-muted card-text">There are no albums for this artist</p>
+                }
+                <hr />
+
+                <button class="btn btn-danger" data-toggle="modal" data-target=".confirm-delete">Delete Genre</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade confirm-delete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalCenterTitle">Add Rating</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-11 mx-auto">
+                    <p class="text-danger">Note: Deleting this genre will result in the deletion of all the associated records.</p>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Genre.GenreID)
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password)
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+
+                        <button type="submit" class="btn btn-danger btn-block my-4">Confirm Delete</button>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

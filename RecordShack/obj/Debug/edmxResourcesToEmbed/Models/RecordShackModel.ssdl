@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RecordShackCMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tblArtist">
+    <Key>
+      <PropertyRef Name="ArtistID" />
+    </Key>
+    <Property Name="ArtistID" Type="int" Nullable="false" />
+    <Property Name="ArtistName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ArtistBio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImageSrc" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ImageAlt" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblGenre">
+    <Key>
+      <PropertyRef Name="GenreID" />
+    </Key>
+    <Property Name="GenreID" Type="int" Nullable="false" />
+    <Property Name="GenreName" Type="varchar" MaxLength="55" Nullable="false" />
+    <Property Name="GanreBio" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ImageSrc" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ImageAlt" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblRatings">
+    <Key>
+      <PropertyRef Name="RatingID" />
+    </Key>
+    <Property Name="RatingID" Type="int" Nullable="false" />
+    <Property Name="RecordID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Comment" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Rating" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblRecord">
+    <Key>
+      <PropertyRef Name="RecordID" />
+    </Key>
+    <Property Name="RecordID" Type="int" Nullable="false" />
+    <Property Name="ArtistID" Type="int" />
+    <Property Name="GenreID" Type="int" />
+    <Property Name="RecordName" Type="varchar" MaxLength="55" Nullable="false" />
+    <Property Name="RecordBio" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ReleaseDate" Type="date" />
+    <Property Name="ImageSrc" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="ImageAlt" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="55" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="55" Nullable="false" />
+    <Property Name="EmailAddress" Type="varchar" MaxLength="55" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tblRatings_tblRecord">
+    <End Role="tblRecord" Type="Self.tblRecord" Multiplicity="1" />
+    <End Role="tblRatings" Type="Self.tblRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRecord">
+        <PropertyRef Name="RecordID" />
+      </Principal>
+      <Dependent Role="tblRatings">
+        <PropertyRef Name="RecordID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRatings_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="1" />
+    <End Role="tblRatings" Type="Self.tblRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="tblRatings">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRecord_tblArtist">
+    <End Role="tblArtist" Type="Self.tblArtist" Multiplicity="0..1" />
+    <End Role="tblRecord" Type="Self.tblRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblArtist">
+        <PropertyRef Name="ArtistID" />
+      </Principal>
+      <Dependent Role="tblRecord">
+        <PropertyRef Name="ArtistID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblRecord_tblGenre">
+    <End Role="tblGenre" Type="Self.tblGenre" Multiplicity="0..1" />
+    <End Role="tblRecord" Type="Self.tblRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblGenre">
+        <PropertyRef Name="GenreID" />
+      </Principal>
+      <Dependent Role="tblRecord">
+        <PropertyRef Name="GenreID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RecordShackCMSModelStoreContainer">
+    <EntitySet Name="tblArtist" EntityType="Self.tblArtist" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblGenre" EntityType="Self.tblGenre" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRatings" EntityType="Self.tblRatings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblRecord" EntityType="Self.tblRecord" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblRatings_tblRecord" Association="Self.FK_tblRatings_tblRecord">
+      <End Role="tblRecord" EntitySet="tblRecord" />
+      <End Role="tblRatings" EntitySet="tblRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRatings_tblUser" Association="Self.FK_tblRatings_tblUser">
+      <End Role="tblUser" EntitySet="tblUser" />
+      <End Role="tblRatings" EntitySet="tblRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRecord_tblArtist" Association="Self.FK_tblRecord_tblArtist">
+      <End Role="tblArtist" EntitySet="tblArtist" />
+      <End Role="tblRecord" EntitySet="tblRecord" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblRecord_tblGenre" Association="Self.FK_tblRecord_tblGenre">
+      <End Role="tblGenre" EntitySet="tblGenre" />
+      <End Role="tblRecord" EntitySet="tblRecord" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

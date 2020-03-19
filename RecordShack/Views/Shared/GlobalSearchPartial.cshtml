@@ -1,0 +1,13 @@
+﻿@model RecordShack.View_Models.Search.GlobalSearchViewModel
+
+@using (Html.BeginForm("GlobalSearchResults", "Search", null, FormMethod.Post, new { @class = "form-inline - mx-2" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.EditorFor(m => m.SearchTerm, new { htmlAttributes = new { @class = "form-control global-search", @placeholder = "search" } })
+
+    <button class="btn btn-primary mx-2" type="submit">
+        <i class="fas fa-search"></i>
+    </button>
+
+}

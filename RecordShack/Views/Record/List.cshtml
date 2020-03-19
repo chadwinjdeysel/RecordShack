@@ -1,0 +1,54 @@
+﻿@model RecordShack.View_Models.Record.ListViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+    <h1 class="display-3 text-center my-3">View Records</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <h1 class="display-4">Genres</h1>
+            @foreach (var genre in Model.GenreList)
+            {
+                <p class="ml-3 my-3">
+                    @Html.ActionLink(genre.GenreName, "List", new { controller = "Record", id = genre.GenreID }, new { @class = "text-larger" })
+                </p>
+            }
+            <p class="ml-3 my-3">
+                @Html.ActionLink("All Records", "List", new { controller = "Record", id = (int?)null }, new { @class = "text-larger"})
+            </p>
+        </div>
+
+        <div class="col-md-9">
+
+            <div class="row">
+                @foreach(var record in Model.RecordsList)
+                {
+                    <div class="col-md-4 my-3">
+                        <div class="card">
+                            <a href="@Url.Action("Details", "Record", new { id = record.RecordID})" class="record-cover">
+                                <div class="record-cover-container">
+                                    @Html.Image(record.ImageSrc, record.ImageAlt, "100%", "", "card-img-top record-cover")
+                                    <div class="overlay">
+                                        <div class="overlay-text">View Details</div>
+                                    </div>
+                                </div>
+                                
+                            </a>
+
+                            <div class="card-body">
+                                <p class="text-larger p-0">@Html.DisplayFor(m => record.RecordName)</p>
+                                <p class="py-0">
+                                    @Html.ActionLink(record.tblArtist.ArtistName, "Details", new { controller = "Artist", id = record.tblArtist.ArtistID}, new { @class = "text-muted"})
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+

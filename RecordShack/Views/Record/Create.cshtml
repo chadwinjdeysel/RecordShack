@@ -1,0 +1,74 @@
+﻿@model RecordShack.View_Models.Record.CreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="text-center my-3 display-4">Create - Record</h2>
+
+<div class="col-sm-6 mx-auto">
+
+    @using (Html.BeginForm("Create", "Record", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group my-3">
+            @Html.LabelFor(m => m.RecordName, new { @class = "form-label" })
+            @Html.EditorFor(m => m.RecordName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.RecordName, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group my-3">
+            @Html.LabelFor(m => m.RecordBio, new { @class = "form-label" })
+            @Html.TextAreaFor(m => m.RecordBio, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.RecordBio, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group my-3">
+            @Html.LabelFor(m => m.ReleaseDate, new { @class = "form-label" })
+            @Html.EditorFor(m => m.ReleaseDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(m => m.ReleaseDate, null, new { @class = "text-danger" })
+        </div>
+
+        <div class="row">
+            <div class="form-group my-3 col-md-6">
+                @Html.LabelFor(m => m.GenreSelected)
+                @Html.DropDownListFor(m => m.GenreSelected, new SelectList(Model.Genre, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.GenreSelected, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group my-3 col-md-6">
+                @Html.LabelFor(m => m.ArtistSelected)
+                @Html.DropDownListFor(m => m.ArtistSelected, new SelectList(Model.Artist, "Value", "Text"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ArtistSelected, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group my-3 col-md-6">
+                @Html.LabelFor(m => m.Image, new { @class = "form-label" })
+                <div class="editor-field">
+                    <input id="Image" title="Upload an image" type="file" name="Image" />
+                </div>
+                @Html.ValidationMessageFor(m => m.Image, null, new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group my-3 col-md-6">
+                @Html.LabelFor(m => m.ImageAlt, new { @class = "form-label" })
+                @Html.EditorFor(m => m.ImageAlt, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.ImageAlt, null, new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group my-4">
+            <button type="submit" class="btn btn-primary btn-block">Create</button>
+            <p class="text-center my-3">
+                @Html.ActionLink("Back to List", "AdminIndex")
+            </p>
+        </div>
+
+    }
+
+</div>
+

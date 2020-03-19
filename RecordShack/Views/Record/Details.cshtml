@@ -1,0 +1,115 @@
+﻿@model RecordShack.View_Models.Record.DetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1 class="display-3 text-center my-3">Record Details </h1>
+
+<div class="row my-3">
+    <div class="col-md-4">
+        <a href="@Url.Action("List", "Record")" class="position-sticky">
+            @Html.Image(Model.Record.ImageSrc, Model.Record.ImageAlt, "100%", "", "")
+        </a>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title float-right">Rating: @Model.OverallRating / 5</h2>
+                <h2 class="card-title">@Model.Record.RecordName</h2>
+                <p class="text-muted card-text">
+                    @Html.ActionLink(Model.Record.tblArtist.ArtistName, "Details", new { controller = "Artist", id = Model.Record.ArtistID }, new { @class = "text-muted" }) •
+                    @Html.ActionLink(Model.Record.tblGenre.GenreName, "Details", new { controller = "Genre", id = Model.Record.tblGenre.GenreID }, new { @class = "text-muted" })
+                </p>
+                <p class="card-text">
+                    @Model.Record.RecordBio
+                </p>
+                <p class="text-larger">Release Date: @Model.Record.ReleaseDate.Value.ToShortDateString()</p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row my-3">
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-center card-title">Ratings</h1>
+
+                @if (Model.RatingsList.Count() >= 1)
+                {
+                    foreach (var rating in Model.RatingsList)
+                    {
+                        if (User.IsInRole("Moderator"))
+                        {
+                            <a class="float-right text-danger" href="@Url.Action("Delete", "Rating", new { id = rating.RatingID})">
+                                    <i class="fas fa-trash-alt "></i>
+                            </a>
+                        }
+
+                        <div class="quote">
+                            <p class="text-larger mb-0 ">
+                                @Html.ActionLink(rating.tblUser.UserName, "Details", new { controller = "Account", id = rating.tblUser.UserID }, new { @class = "text-muted" })
+                            </p>
+                            <p class="ml-2 mb-1">@rating.Comment</p>
+                            <p class="ml-2 mb-0">Rating: @rating.Rating / 5</p>
+                        </div>
+                        <hr />
+                    }
+                }
+                else
+                {
+                    <p class="text-center text-muted">There albums available</p>
+                }
+
+                <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target=".add-rating">Add Rating</button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade add-rating" tabindex="-1" role="dialog" aria-labelledby="AddRating" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalCenterTitle">Add Rating</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-11 mx-auto">
+                    @using (Html.BeginForm("AddRating", "Rating", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.Record.RecordID)
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Comment)
+                            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessageFor(m => m.Comment)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Rating)
+                            @Html.EditorFor(m => m.Rating, new { htmlAttributes = new { @type = "number", @min = "0", @max = "5", @class = "form-control", @value = "0", required = "required" } })
+                            @Html.ValidationMessageFor(m => m.Rating)
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block my-4">Save changes</button>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
